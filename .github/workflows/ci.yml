@@ -44,6 +44,10 @@ jobs:
           APP_ENV: testing
           APP_DEBUG: "false"
           APP_URL: http://localhost
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+          CACHE_STORE: array
+          SESSION_DRIVER: array
 
       - name: Run tests
         run: |
@@ -53,3 +57,7 @@ jobs:
           APP_ENV: testing
           APP_DEBUG: "false"
           APP_URL: http://localhost
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+          CACHE_STORE: array
+          SESSION_DRIVER: array
