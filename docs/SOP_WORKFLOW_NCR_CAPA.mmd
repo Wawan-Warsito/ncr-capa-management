@@ -1,0 +1,43 @@
+flowchart TD
+  %% Roles
+  subgraph Roles
+    U[User (Finder)]
+    FM[Finder Dept Manager]
+    QC[QC Manager]
+    ASME[NCR Coordinator / ASME]
+    RM[Receiver Dept Manager]
+    PICNCR[PIC of CA (NCR)]
+    PICCAPA[PIC of CAPA]
+  end
+
+  %% NCR Flow
+  U -->|Create NCR| NCR_Draft[Status: Draft]
+  NCR_Draft -->|Submit| NCR_PFA[Status: Pending_Finder_Approval]
+
+  FM -->|Approve + comment| NCR_PQR[Status: Pending_QC_Registration]
+  FM -->|Reject + reason| NCR_Draft
+
+  QC -->|QC Registration| NCR_PAR[Status: Pending_ASME_Review]
+  QC -->|Reject/Return (optional)| NCR_Draft
+
+  ASME -->|ASME Review| NCR_STR[Status: Sent_To_Receiver]
+
+  %% Receiver handling
+  RM -->|Assign PIC of CA + Disposition| NCR_ASSIGNED[Status: Sent_To_Receiver (PIC assigned)]
+  NCR_STR --> NCR_ASSIGNED
+
+  %% Decision: CAPA needed?
+  NCR_ASSIGNED -->|Disposition requires CAPA| CAPA_CREATE[Create CAPA (from NCR)]
+  NCR_ASSIGNED -->|Disposition no CAPA| NCR_CLOSE_READY[Ready to Close]
+
+  %% CAPA flow
+  CAPA_CREATE -->|Assign PIC CAPA + Target date| CAPA_IP[CAPA Status: In_Progress]
+  PICCAPA -->|Update progress 0-100%| CAPA_IP
+  CAPA_IP -->|Progress 100%| CAPA_PV[CAPA Status: Pending_Verification]
+  QC -->|Verify effectiveness| CAPA_VER[CAPA Status: Verified]
+  CAPA_VER -->|Close CAPA| CAPA_CLOSED[CAPA Status: Closed]
+
+  %% NCR close
+  CAPA_CLOSED --> NCR_CLOSE_READY
+  NCR_CLOSE_READY -->|Close NCR| NCR_CLOSED[Status: Closed]
+
