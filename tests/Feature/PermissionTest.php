@@ -67,7 +67,7 @@ class PermissionTest extends TestCase
 
     public function test_admin_can_access_user_management()
     {
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
             ->getJson('/api/admin/users');
 
         $response->assertStatus(200);
@@ -75,7 +75,7 @@ class PermissionTest extends TestCase
 
     public function test_qc_manager_cannot_access_user_management()
     {
-        $response = $this->actingAs($this->qcManager)
+        $response = $this->actingAsApi($this->qcManager)
             ->getJson('/api/admin/users');
 
         $response->assertStatus(403);
@@ -83,7 +83,7 @@ class PermissionTest extends TestCase
 
     public function test_regular_user_cannot_access_user_management()
     {
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson('/api/admin/users');
 
         $response->assertStatus(403);
@@ -91,7 +91,7 @@ class PermissionTest extends TestCase
 
     public function test_admin_can_access_department_management()
     {
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
             ->getJson('/api/admin/departments');
 
         $response->assertStatus(200);
@@ -99,7 +99,7 @@ class PermissionTest extends TestCase
 
     public function test_user_cannot_access_admin_routes()
     {
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson('/api/admin/settings');
 
         $response->assertStatus(403);

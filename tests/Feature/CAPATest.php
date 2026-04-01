@@ -77,7 +77,7 @@ class CAPATest extends TestCase
     {
         CAPA::factory()->count(3)->create();
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
             ->getJson('/api/capas');
 
         $response->assertStatus(200)
@@ -89,7 +89,7 @@ class CAPATest extends TestCase
         CAPA::factory()->create(['assigned_pic_id' => $this->pic->id]);
         CAPA::factory()->create(['assigned_pic_id' => $this->admin->id]);
 
-        $response = $this->actingAs($this->pic)
+        $response = $this->actingAsApi($this->pic)
             ->getJson('/api/capas');
 
         $response->assertStatus(200)
@@ -111,7 +111,7 @@ class CAPATest extends TestCase
             'corrective_action_plan' => 'Test corrective action',
         ];
 
-        $response = $this->actingAs($this->qcManager)
+        $response = $this->actingAsApi($this->qcManager)
             ->postJson('/api/capas', $data);
 
         $response->assertStatus(201)
@@ -129,7 +129,7 @@ class CAPATest extends TestCase
     {
         $capa = CAPA::factory()->create();
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
             ->getJson("/api/capas/{$capa->id}");
 
         $response->assertStatus(200)
@@ -149,7 +149,7 @@ class CAPATest extends TestCase
             'progress_percentage' => 0,
         ]);
 
-        $response = $this->actingAs($this->pic)
+        $response = $this->actingAsApi($this->pic)
             ->putJson("/api/capas/{$capa->id}/progress", [
                 'progress_percentage' => 50,
                 'milestone_description' => 'Halfway done',
@@ -176,7 +176,7 @@ class CAPATest extends TestCase
     {
         $capa = CAPA::factory()->create(['current_status' => 'Pending_Verification']);
 
-        $response = $this->actingAs($this->qcManager)
+        $response = $this->actingAsApi($this->qcManager)
             ->postJson("/api/capas/{$capa->id}/verify", [
                 'verification_method' => 'Test Method',
                 'verification_results' => 'Test Results',
@@ -198,7 +198,7 @@ class CAPATest extends TestCase
     {
         $capa = CAPA::factory()->create(['current_status' => 'Verified']);
 
-        $response = $this->actingAs($this->qcManager)
+        $response = $this->actingAsApi($this->qcManager)
             ->postJson("/api/capas/{$capa->id}/close", [
                 'closure_notes' => 'Closing CAPA',
             ]);

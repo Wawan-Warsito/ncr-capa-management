@@ -40,7 +40,7 @@ class SecurityTest extends TestCase
         // Attempt SQL injection in search parameter
         $payload = "' OR '1'='1";
         
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson("/api/ncrs?search={$payload}");
             
         $response->assertStatus(200);
@@ -61,7 +61,7 @@ class SecurityTest extends TestCase
             'created_by_user_id' => $this->user->id,
         ]);
         
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson("/api/ncrs/{$ncr->id}");
             
         $response->assertStatus(200);

@@ -30,7 +30,7 @@ class NCRControllerTest extends TestCase
     {
         $ncr = NCR::factory()->create();
         
-        $response = $this->actingAs($this->user)->getJson('/api/ncrs');
+        $response = $this->actingAsApi($this->user)->getJson('/api/ncrs');
 
         $response->assertStatus(200)
                  ->assertJsonStructure([
@@ -56,7 +56,7 @@ class NCRControllerTest extends TestCase
     {
         $ncr = NCR::factory()->create();
 
-        $response = $this->actingAs($this->user)->getJson("/api/ncrs/{$ncr->id}");
+        $response = $this->actingAsApi($this->user)->getJson("/api/ncrs/{$ncr->id}");
 
         $response->assertStatus(200)
                  ->assertJsonStructure([
@@ -94,7 +94,7 @@ class NCRControllerTest extends TestCase
             'quantity_rejected' => 5,
         ];
 
-        $response = $this->actingAs($this->user)->postJson('/api/ncrs', $data);
+        $response = $this->actingAsApi($this->user)->postJson('/api/ncrs', $data);
 
         $response->assertStatus(201)
                  ->assertJsonStructure([

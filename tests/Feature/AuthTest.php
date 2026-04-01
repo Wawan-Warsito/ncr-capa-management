@@ -108,7 +108,7 @@ class AuthTest extends TestCase
             'department_id' => Department::first()->id,
         ]);
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAsApi($user)
             ->getJson('/api/auth/me');
 
         $response->assertStatus(200)
@@ -134,7 +134,7 @@ class AuthTest extends TestCase
             'department_id' => Department::first()->id,
         ]);
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAsApi($user)
             ->postJson('/api/auth/logout');
 
         $response->assertStatus(200)

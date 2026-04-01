@@ -50,7 +50,7 @@ class PerformanceTest extends TestCase
         
         DB::enableQueryLog();
         
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson('/api/ncrs');
             
         $response->assertStatus(200);
@@ -82,7 +82,7 @@ class PerformanceTest extends TestCase
         
         $start = microtime(true);
         
-        $response = $this->actingAs($this->user)
+        $response = $this->actingAsApi($this->user)
             ->getJson('/api/ncrs');
             
         $end = microtime(true);

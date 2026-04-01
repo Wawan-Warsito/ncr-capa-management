@@ -34,7 +34,7 @@ class CAPAControllerTest extends TestCase
     {
         CAPA::factory()->count(3)->create();
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
                          ->getJson('/api/capas');
 
         $response->assertStatus(200)
@@ -56,7 +56,7 @@ class CAPAControllerTest extends TestCase
     {
         $capa = CAPA::factory()->create();
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
                          ->getJson("/api/capas/{$capa->id}");
 
         $response->assertStatus(200)
@@ -82,7 +82,7 @@ class CAPAControllerTest extends TestCase
             'target_completion_date' => now()->addDays(7)->toDateString(),
         ];
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
                          ->postJson('/api/capas', $data);
 
         $response->assertStatus(201)
@@ -106,7 +106,7 @@ class CAPAControllerTest extends TestCase
             'root_cause_summary' => 'Updated Root Cause',
         ];
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
                          ->putJson("/api/capas/{$capa->id}", $data);
 
         $response->assertStatus(200)
@@ -133,7 +133,7 @@ class CAPAControllerTest extends TestCase
             'milestone_description' => 'Halfway there',
         ];
 
-        $response = $this->actingAs($this->admin)
+        $response = $this->actingAsApi($this->admin)
                          ->putJson("/api/capas/{$capa->id}/progress", $data);
 
         $response->assertStatus(200)
