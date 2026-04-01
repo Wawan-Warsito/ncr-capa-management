@@ -2,8 +2,6 @@
 
 ![CI](https://github.com/Wawan-Warsito/ncr-capa-management/actions/workflows/ci.yml/badge.svg) ![Frontend Build](https://github.com/Wawan-Warsito/ncr-capa-management/actions/workflows/frontend.yml/badge.svg)
 
-Badge di atas akan aktif setelah repository dipush ke GitHub pada `Wawan-Warsito/ncr-capa-management`.
-
 Sistem manajemen Non-Conformance Report (NCR) dan Corrective and Preventive Action (CAPA) berbasis web untuk studi kasus industri fabrikasi stainless steel.
 
 ## Deskripsi
