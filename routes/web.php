@@ -5,6 +5,6 @@ use App\Http\Controllers\PublicController;
 
 Route::get('/share/ncrs/{id}/print', [PublicController::class, 'print']);
 
-Route::get('/{any}', function () {
+Route::fallback(function () {
     return view('welcome');
-})->where('any', '(?!api($|/)).*');
+});
