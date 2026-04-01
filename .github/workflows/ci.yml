@@ -23,24 +23,14 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: Prepare Laravel (SQLite)
+      - name: Prepare Laravel
         run: |
           cp .env.example .env
-          php artisan key:generate
-          mkdir -p database
-          touch database/database.sqlite
+          php artisan key:generate --force
           php artisan config:clear
-        env:
-          APP_ENV: testing
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
 
       - name: Run tests
         run: php artisan test
-        env:
-          APP_ENV: testing
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
 
       - name: Setup Node
         uses: actions/setup-node@v4
